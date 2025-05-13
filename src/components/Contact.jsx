@@ -3,20 +3,25 @@ import { motion } from 'framer-motion';
 import appwriteConfi from '../appwrite/appwriteConfig';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const fromData = {
+        name: name,
+        email: email,
+        message: message,
+      }
+      await appwriteConfi.submitContact(fromData);
       setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+      setName('');
+      setEmail('');
+      setMessage('');
     } catch (error) {
       setStatus('error');
     }
@@ -58,8 +63,8 @@ export default function Contact() {
               type="text"
               id="name"
               name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
               className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 transition duration-300 px-4 py-2"
               placeholder="Enter your name"
@@ -73,8 +78,8 @@ export default function Contact() {
               type="email"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 transition duration-300 px-4 py-2"
               placeholder="Enter your email"
@@ -87,8 +92,8 @@ export default function Contact() {
             <textarea
               id="message"
               name="message"
-              value={formData.message}
-              onChange={handleChange}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               required
               rows={4}
               className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 transition duration-300 px-4 py-2"

@@ -106,15 +106,13 @@ export class appwriteConfig {
         }
     }
 
-    async submitContact(){
+    async submitContact(data){
         try {
             const response = await this.databases.createDocument(
                 confi.appwriteDatabaseId,
                 confi.appwriteContactCollectionID,
                 ID.unique(),
-                {
-                    Name, Email, Message
-                }
+                data
             );
             console.log("Appwrite service :: submitContect :: response", response);
             return response;
