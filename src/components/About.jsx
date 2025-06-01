@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
+
 export default function About() {
   const skills = [
     { name: 'JavaScript', level: '85%' },
